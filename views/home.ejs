@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <% if (locals.shortID) { %>
+        <p> URL Generated: http://localhost:8001/url/<%= shortID %></p>
+    <% } %>
+    <form method="post" action="/url">
+        <label>
+            Enter the original URL
+        </label>
+        <input name="url" placeholder="https;//example.com" type="text">
+        <button type="submit">Generate</button>
+    </form>
+    <% if (locals.urls) { %>
+     <table>
+        <thead>
+            <tr>
+            <th>S. No.</th>
+            <th>redirectUrl</th>
+            <th>shortID</th>
+            <th>visits</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <% urls.forEach((ele,index) => { %>
+                <tr>
+                   <td> <%= index+1%>.</td> 
+                   <td> <%= ele.redirectUrl %></td> 
+                   <td> <%= ele.shortID %></td> 
+                   <td> <%= ele.visitHistory.length %></td> 
+                
+                </tr>
+                <% }) %>
+        </tbody>
+     </table>
+    <% } %>
+    <script>
+        if ( window.history.replaceState ) {
+            window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+</body>
+</html>

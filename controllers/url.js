@@ -13,9 +13,11 @@ async function handlePostUrl(req,res){
         const entry=await URL.create({
             redirectUrl: body.url,
             shortID: shortURL,
-            visitHistory:[]
-        })
-        return res.json({id: shortURL});
+            visitHistory:[],
+            createdBy: req.user._id,
+        });
+        const allUrls= await URL.find({});
+        return res.render("home",{shortID: shortURL,urls: allUrls});
     }
     catch(err){
         console.log(`error: ${err}`);
